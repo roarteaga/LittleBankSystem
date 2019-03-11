@@ -1,0 +1,24 @@
+﻿@{
+    ViewBag.Title = "Pagina principal";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Bienvenido a su cuenta en el banco</h2>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Saldos</h2>
+        <p>El saldo actual de su cuenta es de: @ViewData["balance"]</p>
+
+    </div>
+    <div class="col-md-4">
+        <h2>Operaciones</h2>
+        <p><a id="Retiro" data-toggle="tooltip" title="Agregar movimiento" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Retiro")')"><span class="glyphicon glyphicon-plus"></span> Retiros</a></p>
+        <p><a id="Consignacion" data-toggle="tooltip" title="Agregar movimiento" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Consignacion")')"><span class="glyphicon glyphicon-plus"></span> Consignación</a></p>
+        <p><a id="Transferencia" data-toggle="tooltip" title="Agregar movimiento" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Transferencia")')"><span class="glyphicon glyphicon-plus"></span> Transferencia a cuentas de otro cliente</a></p>
+
+    </div>
+</div>
