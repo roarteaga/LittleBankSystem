@@ -1,24 +1,66 @@
-﻿@{
+﻿@using GridMvc.Html
+@model IEnumerable<AuthenticationService.Models.OperationLog>
+
+@{
+    ViewBag.Title = "Lista de clientes";
+}
+@{
     ViewBag.Title = "Pagina principal";
 }
 
-
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Bienvenido a su cuenta en el banco</h2>
+@if (ViewData["mensajeOk"] != null)
+{
+    <div class="alert alert-info" role="alert">
+        @ViewData["mensajeOk"]
     </div>
+}
+<div id="panel" class="panel panel-default">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Bienvenido a su cuenta en el banco</h2>
+        </div>
 
-    <div class="col-md-4">
-        <h2>Saldos</h2>
-        <p>El saldo actual de su cuenta es de: @ViewData["balance"]</p>
+        <div class="col-md-4">
+            <h2>Saldos</h2>
+            <p>El saldo actual de su cuenta es de: @ViewData["balance"]</p>
 
+        </div>
+        <div class="col-md-4">
+            <h2>Operaciones</h2>
+            <p><a id="Retiro" data-toggle="tooltip" title="Hacer retiro" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Retiro")')"><span class="glyphicon glyphicon-plus"></span> Retiros</a></p>
+            <p><a id="Consignacion" data-toggle="tooltip" title="Hacer consignación" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Consignacion")')"><span class="glyphicon glyphicon-plus"></span> Consignación</a></p>
+            <p><a id="Transferencia" data-toggle="tooltip" title="Realizar transferencia" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Transferencia")')"><span class="glyphicon glyphicon-plus"></span> Transferencia a cuentas de otro cliente</a></p>
+
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Operaciones</h2>
-        <p><a id="Retiro" data-toggle="tooltip" title="Agregar movimiento" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Retiro")')"><span class="glyphicon glyphicon-plus"></span> Retiros</a></p>
-        <p><a id="Consignacion" data-toggle="tooltip" title="Agregar movimiento" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Consignacion")')"><span class="glyphicon glyphicon-plus"></span> Consignación</a></p>
-        <p><a id="Transferencia" data-toggle="tooltip" title="Agregar movimiento" class="btn btn-sm btn-success" onClick="LoadModal('@Url.Action("_Transferencia")')"><span class="glyphicon glyphicon-plus"></span> Transferencia a cuentas de otro cliente</a></p>
+    <div class="panel-body">
+        @Html.Grid(Model).Columns(columns =>
+   {
+   columns.Add(c => c.OP_CL_ID, true);
+   columns.Add(c => c.OP_AC_ID,true).Titled("Cliente").Sortable(true).Filterable(true);
+   columns.Add(c => c.OP_DESCRIPTION).Titled("Operación").Sortable(true).Filterable(true);
+   columns.Add(c => c.OP_DATE).Titled("Fecha evento").Sortable(true).Filterable(true);
 
+        }).Selectable(false).WithPaging(20).Sortable(true).Filterable(true)
     </div>
 </div>
+
+<div class="modal fade" id="ModalIdentificador" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+</div>
+
+@section Scripts
+{
+    <script>
+        function LoadModal(url) {
+
+            $("#ModalIdentificador").load(url, function () {
+
+                $("#ModalIdentificador").modal("show");
+            });
+        }
+        function Load(url) {
+            document.location.href = url;
+        }
+    </script>
+}

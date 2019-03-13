@@ -20,7 +20,11 @@ namespace ServiceIntegration
         static string BaseurlGetClient = ConfigurationManager.AppSettings["ClientServiceGetClientRoute"];
         static string BaseurlCreateClient = ConfigurationManager.AppSettings["ClientServiceCreateClientsRoute"];
         static string BaseurlCreateAccount = ConfigurationManager.AppSettings["ClientServiceCreateAccountRoute"];
-
+        static string BaseurlConsignacion = ConfigurationManager.AppSettings["ClientServiceConsignacionRoute"];
+        static string BaseurlRetiro = ConfigurationManager.AppSettings["ClientServiceRetiroRoute"];
+        static string BaseurlTransferencia = ConfigurationManager.AppSettings["ClientServiceTransferenciaRoute"];
+        static string BaseurlGetOperationLog = ConfigurationManager.AppSettings["ClientServiceOperationLogRoute"];
+        
         public async Task<Client> GetClient(string token,Client client)
         {
             List<JsonHeaders> parametros = new List<JsonHeaders>();
@@ -58,5 +62,43 @@ namespace ServiceIntegration
             Operation retObj = JsonConvert.DeserializeObject<Operation>(response);
             return retObj;
         }
+
+        public async Task<OperationLog> Consignacion(Operation operation, string token)
+        {
+            List<JsonHeaders> parametros = new List<JsonHeaders>();
+            parametros.Add(new JsonHeaders("Authorization", token));
+            JsonAdapters.JsonAdapters jadapters = new JsonAdapters.JsonAdapters();
+            string response = await jadapters.GetJson(parametros, BaseurlConsignacion, operation, BaseurlConsignacion, HttpMethod.POST);
+            OperationLog retObj = JsonConvert.DeserializeObject<OperationLog>(response);
+            return retObj;
+        }
+        public async Task<OperationLog> Retiro(Operation operation, string token)
+        {
+            List<JsonHeaders> parametros = new List<JsonHeaders>();
+            parametros.Add(new JsonHeaders("Authorization", token));
+            JsonAdapters.JsonAdapters jadapters = new JsonAdapters.JsonAdapters();
+            string response = await jadapters.GetJson(parametros, BaseurlRetiro, operation, BaseurlRetiro, HttpMethod.POST);
+            OperationLog retObj = JsonConvert.DeserializeObject<OperationLog>(response);
+            return retObj;
+        }
+        public async Task<OperationLog> Transferencia(Transfer operation, string token)
+        {
+            List<JsonHeaders> parametros = new List<JsonHeaders>();
+            parametros.Add(new JsonHeaders("Authorization", token));
+            JsonAdapters.JsonAdapters jadapters = new JsonAdapters.JsonAdapters();
+            string response = await jadapters.GetJson(parametros, BaseurlTransferencia, operation, BaseurlTransferencia, HttpMethod.POST);
+            OperationLog retObj = JsonConvert.DeserializeObject<OperationLog>(response);
+            return retObj;
+        }
+        public async Task<List<OperationLog>> GetOperationLog(Client client, string token)
+        {
+            List<JsonHeaders> parametros = new List<JsonHeaders>();
+            parametros.Add(new JsonHeaders("Authorization", token));
+            JsonAdapters.JsonAdapters jadapters = new JsonAdapters.JsonAdapters();
+            string response = await jadapters.GetJson(parametros, BaseurlGetOperationLog, client, BaseurlGetOperationLog, HttpMethod.POST);
+            List<OperationLog> retObj = JsonConvert.DeserializeObject<List<OperationLog>>(response);
+            return retObj;
+        }
+        
     }
 }

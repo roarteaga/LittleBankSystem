@@ -30,6 +30,7 @@ namespace ClientServices.Controllers
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_BALANCE_GET_OK"];
                 operation.OP_AC_ID = account.AC_ID;
                 operation.OP_CL_ID = cliente.CL_ID;
+                operation.OP_DATE = DateTime.Now;
                 model.Operations.Add(operation);
                 model.SaveChanges();
                 valorCuenta = account.AC_BALANCE;
@@ -55,6 +56,7 @@ namespace ClientServices.Controllers
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_WITHDRAW_OK"];
                 operation.OP_AC_ID = account.AC_ID;
                 operation.OP_CL_ID = client.CL_ID;
+                operation.OP_DATE = DateTime.Now;
                 model.Operations.Add(operation);
                 model.SaveChanges();
             }catch(Exception exp)
@@ -63,6 +65,7 @@ namespace ClientServices.Controllers
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_ERROR"];
                 operation.OP_AC_ID = account.AC_ID;
                 operation.OP_CL_ID = client.CL_ID;
+                operation.OP_DATE = DateTime.Now;
             }
             return Ok(operation);
         }
@@ -81,6 +84,7 @@ namespace ClientServices.Controllers
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_CONSIGNMENT_OK"];
                 operation.OP_AC_ID = account.AC_ID;
                 operation.OP_CL_ID = client.CL_ID;
+                operation.OP_DATE = DateTime.Now;
                 model.Operations.Add(operation);
                 model.SaveChanges();
             }catch(Exception ex)
@@ -89,6 +93,7 @@ namespace ClientServices.Controllers
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_ERROR"];
                 operation.OP_AC_ID = account.AC_ID;
                 operation.OP_CL_ID = client.CL_ID;
+                operation.OP_DATE = DateTime.Now;
                 model.Operations.Add(operation);
                 model.SaveChanges();
             }
@@ -123,6 +128,7 @@ namespace ClientServices.Controllers
                 operation.OP_AC_ID = account1.AC_ID;
                 operation.OP_CL_ID = account1.AC_CL_ID;
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_TRANSFER_OK"];
+                operation.OP_DATE = DateTime.Now;
                 model.Operations.Add(operation);
                 model.SaveChanges();
             }
@@ -132,6 +138,7 @@ namespace ClientServices.Controllers
                 operation.OP_DESCRIPTION = ConfigurationManager.AppSettings["MSG_ERROR"];
                 operation.OP_AC_ID = account1.AC_ID;
                 operation.OP_CL_ID = clientFrom.CL_ID;
+                operation.OP_DATE = DateTime.Now;
                 model.Operations.Add(operation);
                 model.SaveChanges();
             }

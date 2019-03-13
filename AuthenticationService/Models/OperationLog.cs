@@ -15,5 +15,6 @@ namespace AuthenticationService.Models
         public String OP_DESCRIPTION { get; set; }
         public int OP_CL_ID { get; set; }
         public int OP_AC_ID { get; set; }
+        public DateTime OP_DATE { get; set; }
     }
 }
